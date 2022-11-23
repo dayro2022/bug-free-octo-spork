@@ -12,7 +12,8 @@ app = FastAPI()
 
 
 
-class Student(BaseModel):
+
+class Envio(BaseModel):
 
     id: str
 
@@ -20,73 +21,76 @@ class Student(BaseModel):
 
     lastname: str
 
+    Ciudad: str
+
+
     #skills: List[str] = []
 
 
 
-students = []
+envios = []
 
 
 
 
 
-@app.get("/estudiantes")
+@app.get("/enviados")
 
-def get_students():
+def get_envios():
 
-    return students
-
-
-
-@app.get("/estudiantes/{id}")
-
-def get_student(id: str):
-
-    for student in students:
-
-        if student["id"] == id:
-
-            return student
-
-    return "No existe el estudiante"
+    return envios
 
 
 
-@app.post("/estudiantes")
+@app.get("/enviados/{id}")
 
-def save_student(student: Student):
+def get_envios(id: str):
 
-    student.id = str(uuid4())
+    for send in envios:
 
-    students.append(student.dict())
+        if send["id"] == id:
 
-    return "Estudiante registrado"
+            return send
+
+    return "No existe el envio"
 
 
 
-@app.put("/estudiantes/{id}")
+@app.post("/envio")
 
-def update_student(updated_updated: Student, id:str):
+def save_envio(send: Envio):
 
-    for student in students:
+    send.id = str(uuid4())
 
-        if student["id"] == id:
+    envios.append(send.dict())
 
-            student["name"] = updated_updated.name
+    return "envio registrado"
 
-            student["lastname"] = updated_updated.lastname
+
+
+@app.put("/modificar envio/{id}")
+
+def update_envio(updated_updated: Envio, id:str):
+
+    for send in envios:
+
+        if send["id"] == id:
+
+            send["name"] = updated_updated.name
+
+            send["lastname"] = updated_updated.lastname
 
             #student["skills"] = updated_updated.skills
 
-            return "Estudiante modificado"
+            return "Envio modificado"
 
-    return "No existe el estudiante"
+    return "No existe el envio"
 
 
-@app.delete("/estudiantes/{id}")
-def delete_student(id: str):
-    for student in students:
-        if student["id"] == id:
-            students.remove(student)
-            return "estudiante eliminado"
-    return "No existe el estudiante"
+@app.delete("/envio/{id}")
+def delete_envio(id: str):
+    for send in envios:
+        if send["id"] == id:
+            envios.remove(send)
+            return "envio eliminado"
+    return "No existe el envio"
