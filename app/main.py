@@ -25,6 +25,8 @@ class Student(BaseModel):
 
 
 students = []
+hola=[]
+
 
 
 
